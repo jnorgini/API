@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.norgini.API.domain.User;
 import com.norgini.API.repositories.UserRepository;
 import com.norgini.API.services.UserService;
+import com.norgini.API.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,7 +19,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findById(Integer id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 
 }
