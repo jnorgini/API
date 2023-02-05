@@ -76,7 +76,6 @@ class UserServiceImplTest {
 		assertNotNull(response);
 		assertEquals(1, response.size());
 		assertEquals(User.class, response.get(0).getClass());
-		
 		assertEquals(ID, response.get(INDEX).getId());
 		assertEquals(NAME, response.get(INDEX).getName());
 		assertEquals(EMAIL, response.get(INDEX).getEmail());
@@ -91,7 +90,6 @@ class UserServiceImplTest {
 		
 		assertNotNull(response);
 		assertEquals(User.class, response.getClass());
-		
 		assertEquals(ID, response.getId());
 		assertEquals(NAME, response.getName());
 		assertEquals(EMAIL, response.getEmail());
@@ -113,8 +111,17 @@ class UserServiceImplTest {
 	}
 
 	@Test
-	void testUpdate() {
-		fail("Not yet implemented");
+	void whenUpdateThenReturnSuccess() {
+		when(repository.save(any())).thenReturn(user);
+		
+		User response = service.update(userDTO);
+		
+		assertNotNull(response);
+		assertEquals(User.class, response.getClass());
+		assertEquals(ID, response.getId());
+		assertEquals(NAME, response.getName());
+		assertEquals(EMAIL, response.getEmail());
+		assertEquals(PASSWORD, response.getPassword());
 	}
 
 	@Test
