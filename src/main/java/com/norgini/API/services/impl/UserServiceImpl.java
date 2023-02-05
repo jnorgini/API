@@ -11,6 +11,7 @@ import com.norgini.API.domain.User;
 import com.norgini.API.dto.UserDTO;
 import com.norgini.API.repositories.UserRepository;
 import com.norgini.API.services.UserService;
+import com.norgini.API.services.exceptions.DataIntegrityViolationException;
 import com.norgini.API.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -34,7 +35,15 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User create(UserDTO obj) {
+		findByEmail(obj);
 		return repository.save(mapper.map(obj, User.class));
+	}
+	
+	private void findByEmail(UserDTO obj) {
+		Optional<User> user = repository.findByEmail(obj.getEmail());
+		if(user.isPresent()) {
+			throw new DataIntegrityViolationException("E-mail já cadastrado no sistema");
+		}
 	}
 
 }
