@@ -57,5 +57,4 @@ public class UserServiceImpl implements UserService {
 			throw new DataIntegrityViolationException("E-mail já cadastrado no sistema");
 		}
 	}
-
 }
