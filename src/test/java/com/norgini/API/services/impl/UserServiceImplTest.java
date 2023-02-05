@@ -33,6 +33,7 @@ class UserServiceImplTest {
 	private static final String EMAIL = "juliana@gmail.com";
 	private static final String PASSWORD = "123";
 	private static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado";
+	private static final String E_MAIL_JA_CADASTRADO_NO_SISTEMA = "E-mail já cadastrado no sistema";
 	private static final int INDEX = 0;
 
 	@InjectMocks
@@ -105,7 +106,7 @@ class UserServiceImplTest {
 			service.create(userDTO);
 		} catch (Exception ex) {
 			assertEquals(DataIntegrityViolationException.class, ex.getClass());
-			assertEquals("E-mail já cadastrado no sistema", ex.getMessage());
+			assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
 		}
 		
 	}
@@ -122,6 +123,19 @@ class UserServiceImplTest {
 		assertEquals(NAME, response.getName());
 		assertEquals(EMAIL, response.getEmail());
 		assertEquals(PASSWORD, response.getPassword());
+	}
+	
+	@Test
+	void whenUpdateThenReturnAnDataIntegrityViolationException() {
+		when(repository.findByEmail(anyString())).thenReturn(optionalUser);
+		
+		try {
+			optionalUser.get().setId(2);
+			service.update(userDTO);
+		} catch (Exception ex) {
+			assertEquals(DataIntegrityViolationException.class, ex.getClass());
+			assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
+		}
 	}
 
 	@Test
