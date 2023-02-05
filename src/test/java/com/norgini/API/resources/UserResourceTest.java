@@ -2,7 +2,6 @@ package com.norgini.API.resources;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
@@ -131,7 +130,6 @@ class UserResourceTest {
 		assertEquals(ResponseEntity.class, response.getClass());
 		assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 		verify(service, times(1)).delete(anyInt());
-		
 	}
 	
 	private void startUser() {
