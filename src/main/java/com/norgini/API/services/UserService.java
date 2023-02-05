@@ -8,9 +8,8 @@ import com.norgini.API.dto.UserDTO;
 public interface UserService {
 	
 	User findById(Integer id);
-	
 	List<User> findAll();
-	
 	User create(UserDTO obj);
+	User update(UserDTO obj);
 
 }
