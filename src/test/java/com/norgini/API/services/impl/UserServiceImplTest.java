@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.norgini.API.domain.User;
 import com.norgini.API.dto.UserDTO;
 import com.norgini.API.repositories.UserRepository;
+import com.norgini.API.services.exceptions.ObjectNotFoundException;
 
 @SpringBootTest
 class UserServiceImplTest {
@@ -84,6 +85,19 @@ class UserServiceImplTest {
 		user = new User(ID, NAME, EMAIL, PASSWORD);
 		userDTO = new UserDTO(ID, NAME, EMAIL, PASSWORD);
 		optionalUser = Optional.of(new User(ID, NAME, EMAIL, PASSWORD));
+	}
+	
+	@Test
+	void whenFindByIdThenReturnAnObjectNotFoundException() {
+		when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException("Objeto não encontrado"));
+		
+		try {
+			service.findById(ID);
+		} catch (Exception ex) {
+			assertEquals(ObjectNotFoundException.class, ex.getClass());
+			assertEquals("Objeto não encontrado", ex.getMessage());
+		}
+		
 	}
 
 }
